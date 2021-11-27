@@ -1,0 +1,25 @@
+{
+	"platform": "xilinx-zynqMp",
+	"version": "5g_nr_v3.1.0.1",
+	"app": {
+		"web_version": "web debug",
+		"cli_version": "cli debug",
+		"net_version": "net debug",
+		"net_config_path": "/mnt/flash/config/config.txt",
+		"net_config_version": "net config debug"
+	},
+	"fpga":     {
+		"version": "zu6cg-v0.0.0.0",
+		"phyaddr" : "0xa0020000",
+		"script-path": "/mnt/flash/loadfpga.sh"
+	},
+	"clock": {
+		"name": "SI538X",
+		"linux-fs-interface": "i2c-0",
+		"pin-sda": 59,
+		"pin-scl": 58,
+		"config_path": "/mnt/flash/config/si5380.txt",
+		"config_version": "clock debug",
+		"config_md5": "1234567890abcdef"
+	}
+}
