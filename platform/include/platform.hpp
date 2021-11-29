@@ -28,47 +28,49 @@ class enable{
 
 class log{
 public:
-    virtual void info() = 0; //日志的基本信息仅供参考,查看日志的使用方法
-    // virtual void write(const char* file,void* buf) = 0; //抽象读写接口
+    virtual void info() = 0;
 };
 
 class init{
     public:
     std::string platform_type;
     json fp;
-    virtual void init_class() = 0;          //可以访问的抽象接口  
+    virtual void init_class() = 0;          
 };
 
 /*device 作为主要接口 访问所有的设备信息*/
-class device:public init,public enable{ //允许子类设备加载重构,上层封装的类设备,使能状态设置为外界不可访问;
+class device:public init,public enable{
     public:
-    virtual void config(json& fp) = 0;    //可以访问的抽象接口
-    virtual size_t read(int reg,void* buf) = 0; //返回从设备中读取的数据
-    virtual bool write(int reg, void* buf) = 0; //向设备中写入配置数据
-    virtual void info() = 0; //打印设备名称,表明设备类型
+    virtual void config(json& fp) = 0;    
+    virtual size_t read(int reg,void* buf) = 0; 
+    virtual bool write(int reg, void* buf) = 0; 
+    virtual void info() = 0; 
+    virtual std::string get_dev_type() = 0;
 };
 
-class open_dev{ //可能会有一些私有数据进行使用,需要用一个类进行声明; 判断设备是否可用;
+class open_dev{
     public:
-    device* operator()(device& dev); //打开设备使用设备的读写接口,改变设备的指向接口;
+    device* operator()(device& dev);
 };
 
 class close_dev{
     public:
-    device* operator()(device& dev); //release 释放正在使用的设备; 判断设备是否可以关闭,改变设备的指向接口;
+    device* operator()(device& dev);
 };
 
-class platform:public init,private enable,public log{
+//实际可以挂载的设备没有很多,所以使用list 结构完全够用,不需要使用AVL做查找
+class platform:public init,private enable,public log{ 
     public:
+    device* search_dev(std::string name);
     void set_config_file(json& js);
-    bool platform_register(device* dev); //在平台上注册设备
-    bool platform_unregister(device* dev); //删除已经挂载的设备
-    bool check_dev(const device& dev) const; //查看设备是否存在,对比完成之后查看设备是否还存在
+    bool platform_register(device* dev); 
+    bool platform_unregister(device* dev); 
+    bool check_dev(const device& dev) const; 
     virtual void init_class();
-    virtual void info(); //将所有的器件的信息进行收集和查找使用
-    virtual ~platform(); //虚拟重载掉所有的平台
+    virtual void info(); 
+    virtual ~platform(); 
     private:
-    std::list<device*> dev; //注册生成的设备进行使用
+    std::list<device*> dev; 
 };
 
 class xilinx:public platform{

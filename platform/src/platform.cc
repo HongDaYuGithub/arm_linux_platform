@@ -16,11 +16,12 @@ void platform::init_class(){//平台的配置方法
     std::for_each(dev.begin(),dev.end(),platform_init);
 }
 
+/*FIXME: 安全隐患重复设备注册,需要特征码进行区分*/
 bool platform::platform_register(device* dev){
     if(dev == nullptr)
         return false;
-    dev->fp = this->fp;     //赋值配置文件的所有属性
-    dev->set_true();        //代表设备正在被使用
+    dev->fp = this->fp;     
+    dev->set_true();        
     this->dev.push_back(dev);
     return true;
 }
@@ -33,28 +34,34 @@ bool platform::platform_unregister(device *dev){
     return true;
 }
 
-void enable::set_true(void){ //单独对数据进行保护
+device* platform::search_dev(std::string name){
+    std::list<device*>::iterator itr;
+    std::list<device*>::iterator itr_start = this->dev.begin();
+    std::list<device*>::iterator itr_end = this->dev.end();
+    for( itr = itr_start ; itr != itr_end ; itr++){
+        if(name == (*itr)->get_dev_type()){
+            return (*itr);
+        }
+    }
+    return nullptr;
+}
+
+void enable::set_true(void){
     this->status = true;
 }
 
-void enable::set_false(void){ //单独对数据进行保护
+void enable::set_false(void){
     this->status = false;
 }
 
-bool enable::check_status(void){ //返回使能使用的状态值
+bool enable::check_status(void){
     return this->status;
 }
 
-void platform_del_dev(device* ptr){
-    std::cout << "clear dev start: "<< std::endl;
-    ptr->info();
-}
+/*FIXME: 存在安全隐患,没有将在register 函数模块中注册的归还内存给系统*/
 
 platform::~platform(){
-    // std::cout << "platform del dev start \n";
-    std::for_each(dev.begin(),dev.end(),platform_del_dev); //释放开辟的内存空间,释放内存的使用
-    dev.clear(); //清空平台所有挂载的设备
-    // std::cout << "platform del dev ok\n";
+    dev.clear();
 }
 
 void platform::info(){ //还有日志类型的相关的开关

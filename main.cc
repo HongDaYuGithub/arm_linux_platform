@@ -21,10 +21,10 @@ int main(int argc,char** argv){ //主函数中调用动态库,分别进行调试
 
     try{
         if(argc != 2) //必须初始化参数为两个参数
-            throw 1;
+            throw CONFIG_FILE_NONE;
         
         if(access(argv[1],F_OK) < 0) // 检测文件是否 真的存在
-            throw 2;
+            throw ARGC_ARGV_ERROR;
 
         json config_platform(argv[1]); //获取json 控制对象
         config_platform.find("platform",plat);
@@ -35,18 +35,15 @@ int main(int argc,char** argv){ //主函数中调用动态库,分别进行调试
             query_info = &xilinx_platform;
         }else if(!plat.find("altera")){                             //开始配置altera 平台;
             platform_init = &altera_platform;                       // altera 设备初始化和 注册方式
-            register_device(&altera_platform,config_platform);
+            register_device(&altera_platform,config_platform);      // 完整的平台打印信息
             query_info = &altera_platform;
         }else{
-            throw 3;
+            throw DONT_MATCH;
         }
 
-        platform_init->init_class(); //平台的初始化方式
-        
-        query_info->info();
-
-        // std::cout << "******************************************************" << std::endl;
-        // std::cout << platform_version << std::endl; //打印由Makefile 生成的platform 版本信息
+        //TODO:使用绝对时间的时间戳进行打印
+        platform_init->init_class();    //平台的初始化方式
+        query_info->info();             //此为设备注册过程中打印的debug信息
 
     }catch(MAIN_THREAD_ERROR tmp){
         switch(tmp){
