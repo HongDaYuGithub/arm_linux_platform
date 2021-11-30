@@ -15,7 +15,7 @@ int main(int argc,char** argv){ //主函数中调用动态库,分别进行调试
 
     using namespace PLATFORM; //已经实例化的平台对象列表,以供平台查询使用
 
-    init* platform_init = nullptr; //平台初始化接口
+    platform_interface* platform_init = nullptr; //平台初始化接口
     std::string plat; // 平台版本的
     log* query_info = nullptr; //平台信息查询接口
     Sqlite3* init_app = nullptr; //为应用程序初始化数据库
@@ -32,9 +32,8 @@ int main(int argc,char** argv){ //主函数中调用动态库,分别进行调试
 
         if(!plat.find("xilinx")){//开始配置xilinx 平台
             platform_init = &xilinx_platform;                       // xilinx 设备初始化和 注册方式
-            register_device(&xilinx_platform,config_platform);      // 选择注册平台的加载方式
+            register_device(&xilinx_platform,config_platform);     // 选择注册平台的加载方式
             query_info = &xilinx_platform;
-            init_app = &xilinx_platform;
         }else if(!plat.find("altera")){                             //开始配置altera 平台;
             platform_init = &altera_platform;                       // altera 设备初始化和 注册方式
             register_device(&altera_platform,config_platform);      // 完整的平台打印信息

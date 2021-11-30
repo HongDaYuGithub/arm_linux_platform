@@ -34,9 +34,8 @@ public:
 
 class init{
     public:
-    std::string platform_type;
     json fp;
-    virtual void init_class() = 0;          
+    virtual void init_class() = 0;    
 };
 
 /*device 作为主要接口 访问所有的设备信息*/
@@ -59,10 +58,16 @@ class close_dev{
     device* operator()(device& dev);
 };
 
+class platform_interface:public init{
+public:
+    virtual device* search_dev(std::string name) = 0;
+};
+
 //实际可以挂载的设备没有很多,所以使用list 结构完全够用,不需要使用AVL做查找
-class platform:public init,private enable,public log{ 
+class platform:public platform_interface,private enable,public log{ 
     public:
-    device* search_dev(std::string name);
+    std::string platform_type;
+    virtual device* search_dev(std::string name);
     void set_config_file(json& js);
     bool platform_register(device* dev); 
     bool platform_unregister(device* dev); 
@@ -71,7 +76,7 @@ class platform:public init,private enable,public log{
     virtual void info(); 
     virtual ~platform(); 
     private:
-    std::list<device*> dev; 
+    std::list<device*> dev;
 };
 
 class xilinx:public platform{
