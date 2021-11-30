@@ -72,3 +72,7 @@ void platform::info(){ //还有日志类型的相关的开关
 std::string device_status_check(bool it){
     return (it)? "on" : "off";
 }
+
+void platform::set_config_file(json& fp){
+    this->fp = fp;
+}

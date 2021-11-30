@@ -21,5 +21,10 @@
 		"config_path": "/mnt/flash/config/si5380.txt",
 		"config_version": "clock debug",
 		"config_md5": "1234567890abcdef"
+	},
+	"sqlite3":{
+		"path":"/mnt/flash/config/test.db",
+		"db_table":"main",
+		"config":"/mnt/flash/config/database.csv"
 	}
 }

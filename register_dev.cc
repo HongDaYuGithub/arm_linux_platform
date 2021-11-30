@@ -28,5 +28,6 @@ void register_fpga(json& fp,platform* plat,device* dev)
 }
 
 void register_device(platform* plat,json& fp){
+    plat->set_config_file(fp); //初始化平台配置文件
     register_fpga(fp,plat,&DEVICE::fpga); //完整的FPGA设备注册流程 第一个设备流程
 }

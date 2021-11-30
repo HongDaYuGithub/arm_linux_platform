@@ -6,6 +6,7 @@
 #include <list>
 #include <algorithm>
 #include "../../config/include/json.hpp"
+#include "../../sqlite3/sqlite3.hpp"
 
 enum MAIN_THREAD_ERROR{
     CONFIG_FILE_NONE = 1,
