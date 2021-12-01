@@ -44,7 +44,7 @@ int main(int argc,char** argv){ //主函数中调用动态库,分别进行调试
 
         if( platform_init == nullptr || query_info == nullptr || init_app == nullptr)
             throw DONT_MATCH; //避免出现空指针
-
+        //TODO:消除SQLITE3 类的告警
         //TODO:使用绝对时间的时间戳进行打印
         platform_init->init_class();    //平台的初始化方式
         query_info->info(); //日志指针使用
