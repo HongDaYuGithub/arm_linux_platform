@@ -12,7 +12,7 @@ json::json(const char* n): file_attr(n){
 }
 
 json::~json() {
-   cJSON_Delete(root); //退出之后,销毁所有的分配的节点的信息
+  // cJSON_Delete(root); //退出之后,销毁所有的分配的节点的信息
 }
 
 void json::print() {

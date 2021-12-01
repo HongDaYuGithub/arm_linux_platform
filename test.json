@@ -2,8 +2,8 @@
 	"platform": "xilinx-zynqMp",
 	"version": "5g_nr_v3.1.0.1",
 	"app": {
-		"web_version": "web debug",
-		"cli_version": "cli debug",
+		"web_path": "web elf",
+		"cli_path": "cli elf",
 		"net_version": "net debug",
 		"net_config_path": "/mnt/flash/config/config.txt",
 		"net_config_version": "net config debug"
@@ -23,9 +23,9 @@
 		"md5": "1234567890abcdef"
 	},
 	"sqlite3":{
-		"path":"/mnt/flash/config/test.db",
+		"path":"/home/hongdayu/flash/config/test.db",
 		"db":"main",
-		"config":"/mnt/flash/config/database.csv",
+		"config":"/home/hongdayu/flash/config/main.csv",
 		"md5": "123456789abcdefg"
 	}
 }

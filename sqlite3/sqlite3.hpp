@@ -16,20 +16,24 @@ int sqlite_common_callback(void*,int,char**,char**);
 class Sqlite3{
 public:
     Sqlite3(){}
-    Sqlite3(char* path,sqlite3* db):db_path(path),database(db){
+    Sqlite3(const char* path,const char* db_name):db_path(path),db_table(db_name){
         this->callback = sqlite_common_callback;
     }
+    void operator()(const char*,const char*);
     void init();
-    void sql(char* _sql); //只能用作常规的增删改三种接口
-    void find(char* _sql);
+    void sql(const char* _sql); //只能用作常规的增删改三种接口
+    void find(const char* _sql);
+    bool check_tab(std::string tab);
+    void config(std::string file);
     void update_callback(sqlite3_callback call);
     ~Sqlite3();
 private:
     typedef int (*sqlite3_callback)(void* data,int argc,char** argv,char** azColName);
     //在回调查询的时候进行更新数据库,需要维护的内部指针变量
     sqlite3_callback callback;     
-    sqlite3* database = nullptr;
-    char* db_path = nullptr;
+    sqlite3* database;
+   const  char* db_table;
+   const  char* db_path;
 };
 
 #endif
