@@ -12,5 +12,5 @@
 - Makefile  工程管理文件
 - draw.io   是一种开源软件 可以打开查看 \*.draw.io格式的文件
 - platform 是驱动平台
-- net 是 web cli desktop 交互程序模块
+- app 是 web cli desktop 交互程序模块
 - sqlite3 sqlite3的简易封装
