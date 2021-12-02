@@ -1,6 +1,6 @@
 CXX=g++
 ROOT=.
-CFLAGS= -Wall -g -lsqlite3 -g
+CFLAGS= -Wall -Wno-reorder -g -lsqlite3 -g -Wno-unused-variable
 TARGET=cplus_debug
 INC_DIRS=platform/include config/include/
 

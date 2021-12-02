@@ -5,6 +5,7 @@ int sqlite_common_callback(void* data,int argc,char** argv,char** Col){ //简单
     for(int i = 0 ; i < argc ; i++){
         std::cout << argv[i] << std::endl;
     }
+    return 0;
 }
 
 void Sqlite3::init(){
@@ -60,6 +61,7 @@ static int check_tab_callback(void *buf,int argc,char** argv,char** Col)
         if(!buf)
             *((int*)buf) = st; //返回相应的查询状态
     }
+    return 0;
 }
 
 bool Sqlite3::check_tab(std::string tab){

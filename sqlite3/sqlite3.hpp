@@ -13,6 +13,7 @@
 
 int sqlite_common_callback(void*,int,char**,char**);
 
+
 class Sqlite3{
 public:
     Sqlite3(){}
