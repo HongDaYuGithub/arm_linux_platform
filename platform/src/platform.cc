@@ -1,7 +1,7 @@
 #include "platform.hpp"
 
 void platform_config(device* ptr){ //配置文件进行传递
-   ptr->config(ptr->fp);
+   ptr->config(*(ptr->fp));
 }
 
 void platform_init(device* ptr){
@@ -74,5 +74,5 @@ std::string device_status_check(bool it){
 }
 
 void platform::set_config_file(json& fp){
-    this->fp = fp;
+    this->fp = &fp;
 }

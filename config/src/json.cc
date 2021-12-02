@@ -6,13 +6,15 @@
 
 json::json(const char* n): file_attr(n){
     fp = fopen(name,"r");
-    buffer = new char(this->size());
+    buffer = (char*)calloc(this->size(),1);
     fread(buffer,this->size(),1,fp);
     root = cJSON_Parse(buffer);
 }
 
 json::~json() {
-  // cJSON_Delete(root); //退出之后,销毁所有的分配的节点的信息
+    cJSON_Delete(root);
+    free(buffer);
+    buffer = nullptr;
 }
 
 void json::print() {

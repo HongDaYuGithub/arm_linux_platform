@@ -51,7 +51,7 @@ public:
 
 class init{
     public:
-    json fp;
+    json* fp;
     virtual void init_class() = 0;    
 };
 
