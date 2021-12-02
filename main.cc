@@ -3,7 +3,7 @@
 #include "platform.hpp"
 #include <sys/stat.h>
 #include <unistd.h>
-#include "net/net.hpp"
+#include "app/app.hpp"
 
 extern void register_device(platform* plat,json& fp);
 

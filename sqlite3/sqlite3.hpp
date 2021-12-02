@@ -26,6 +26,7 @@ public:
     bool check_tab(std::string tab);
     void config(std::string file);
     void update_callback(sqlite3_callback call);
+    void update_sqlite(); //更新数据库
     ~Sqlite3();
 private:
     typedef int (*sqlite3_callback)(void* data,int argc,char** argv,char** azColName);

@@ -7,6 +7,23 @@
 #include <algorithm>
 #include "../../config/include/json.hpp"
 #include "../../sqlite3/sqlite3.hpp"
+#include <semaphore.h> //用户信号量POSIX gnu 库 性能更值得信赖
+#include <pthread.h> //用户信号量POSIX gnu 库性能更值得信赖
+#include <sys/sem.h>
+#include <sys/types.h> // XSI IPC 存在相关的数据类型
+#include <sys/ipc.h> // IPC ipc 创建所使用的键位
+#include <sys/msg.h> // IPC msg 消息队列
+#include <sys/shm.h>
+
+#define struct  struct __attribute__((packed))
+
+union semun
+{
+   int val;
+   semid_ds *buf;
+   unsigned short* array;
+};
+
 
 enum MAIN_THREAD_ERROR{
     CONFIG_FILE_NONE = 1,
@@ -39,7 +56,7 @@ class init{
 };
 
 /*device 作为主要接口 访问所有的设备信息*/
-class device:public init,public enable{
+class device:public init,public enable{ //设备的竞态访问,可能会做到内核中,还有可能会做到用户层的软件底层中
     public:
     virtual void config(json& fp) = 0;    
     virtual size_t read(int reg,void* buf) = 0; 

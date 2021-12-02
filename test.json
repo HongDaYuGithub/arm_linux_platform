@@ -27,5 +27,9 @@
 		"db":"main",
 		"config":"/home/hongdayu/flash/config/main.csv",
 		"md5": "123456789abcdefg"
+	},
+	"cache_layer":{
+		"fs_path":"/proc",
+		"key_id":"0xFF"
 	}
 }
